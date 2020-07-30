@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  mongodb:
+    container_name: my_mongo
+    volumes:
+      - ./db/mongo:/data/db
+    image: mongo:4.0
+  
+  redis:
+    container_name: my_redis
+    image: redis:5
+
+  api:
+    build: .
+    container_name: my_api
+    restart: on-failure
+    volumes:
+      - ./:/whoiskp
+    ports:
+      - 5005:5000
+    command: python main.py
+
